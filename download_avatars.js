@@ -4,10 +4,11 @@ var fs = require('fs');
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
-repoOwner = process.argv[2];
-repoName = process.argv[3];
+
 function getRepoContributors(repoOwner, repoName, callbacks) {
-  if (repoOwner || repoName){
+  repoOwner = process.argv[2];
+  repoName = process.argv[3];
+  if (!repoOwner || !repoName){
     console.log("Please specify owner and Reponame");
   } else {
       var options = {
@@ -31,7 +32,7 @@ function downloadImageByURL(url, filePath) {
        .on('error', function (err) {
          throw err;
        })
-       .pipe(fs.createWriteStream(filePath));
+       .pipe(fs.createWriteStream(filePath).on('finish',function(finish){console.log('avatar complete!!')}));
 }
 
 
