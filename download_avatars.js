@@ -4,7 +4,12 @@ var fs = require('fs');
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
+repoOwner = process.argv[2];
+repoName = process.argv[3];
 function getRepoContributors(repoOwner, repoName, callbacks) {
+  // if (repoOwner || repoName){
+  //   console.log("Please specift owner and Reponame");
+  // } else
   var options = {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
@@ -16,10 +21,6 @@ function getRepoContributors(repoOwner, repoName, callbacks) {
   request(options, function(err, res, body) {
     body = JSON.parse(body);
 
-    // body.forEach(function(element){
-    //   console.log(element.avatar_url);
-    // });
-    // console.log(typeof body)
     callbacks(err, body);
   });
 }
